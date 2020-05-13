@@ -45,9 +45,8 @@ jobs:
       - uses: actions/checkout@master
       - name: Build iOS IPA
         working-directory: ./ios/App
-        run: |
-          pwd
-          xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos 
+        run: pwd
+      - run: xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos 
     
   build-android:
       needs: environment-setup
@@ -56,8 +55,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Build Android APK
         working-directory: ../android
-        run: |
-          pwd
-          bash ./gradlew assembleDebug
+        run: pwd
+      - run: bash ./gradlew assembleDebug
 
 
