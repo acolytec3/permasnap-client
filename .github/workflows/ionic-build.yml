@@ -42,6 +42,7 @@ jobs:
       needs: environment-setup
       runs-on: macos-latest
       steps: 
+      - uses: actions/checkout@master
       - name: Build iOS IPA
         working-directory: ./permasnap-client/ios/App
         run: xcodebuild -workspace App.xcworkspace -scheme App clean -configuration debug -sdk iphoneos 
@@ -51,6 +52,7 @@ jobs:
       needs: environment-setup
       runs-on: macos-latest
       steps:
+      - uses: actions/checkout@master
       - name: Build Android APK
         working-directory: ./permasnap-client/android
         run: bash ./gradlew assembleDebug
