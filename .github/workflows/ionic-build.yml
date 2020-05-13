@@ -45,10 +45,14 @@ jobs:
       - uses: actions/checkout@master
       - name: Build iOS IPA
         working-directory: ./permasnap-client/ios/App
-        run: xcodebuild -workspace App.xcworkspace -scheme App clean -configuration debug -sdk iphoneos 
+        run: |
+          pwd
+          xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos 
     
       - name: Build Android APK
         working-directory: ./permasnap-client/android
-        run: bash ./gradlew assembleDebug
+        run: |
+          pwd
+          bash ./gradlew assembleDebug
 
 
