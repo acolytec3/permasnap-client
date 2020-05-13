@@ -29,28 +29,24 @@ jobs:
         java-version: 1.8
       
     - run: npm install -g @ionic/cli
-    - run: npm install
-      env:
-        working-directory: ./permasnap-client
-        CI: false
+      working-directory: ./permasnap-client
+    - run: |
+        npm install
 
-    - run: ionic cap sync
+    - working-directory: ./permasnap-client/ios/App
+      run: |
+        ionic cap sync
       env:
-        working-directory: ./permasnap-client
         CI: false
 
       
     - name: Build iOS IPA
+      working-directory: ./permasnap-client
       run: xcodebuild -workspace App.xcworkspace -scheme App clean -configuration debug -sdk iphoneos 
-      env:
-        working-directory: ./permasnap-client/ios/App
-        CI: false
-
+      
     - name: Build Android APK
+      working-directory: ./permasnap-client/android
       run: bash ./gradlew assembleDebug
-      env:
-        working-directory: ./permasnap-client/android
-        CI: false
 
 
 
