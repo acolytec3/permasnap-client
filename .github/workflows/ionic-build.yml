@@ -29,8 +29,10 @@ jobs:
         java-version: 1.8
       
     - run: npm install -g @ionic/cli
+    
+    - name: Install dependencies
       working-directory: ./permasnap-client
-    - run: |
+      run: |
         npm install
 
     - working-directory: ./permasnap-client/ios/App
