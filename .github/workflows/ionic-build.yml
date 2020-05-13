@@ -54,7 +54,8 @@ jobs:
       - uses: actions/checkout@master
       - name: Build Android APK
         working-directory: ./permasnap-client/android
-        run: cd android/ && bash ./gradlew assembleDebug
+        run: bash ./gradlew assembleDebug
+      - run: pwd
 
 
 
