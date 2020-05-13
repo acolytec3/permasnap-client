@@ -32,7 +32,7 @@ jobs:
       run: |
         npm install
 
-    - working-directory: ./permasnap-client/
+    - working-directory: ./permasnap-client
       run: |
         ionic cap sync
       env:
@@ -53,7 +53,7 @@ jobs:
       steps:
       - uses: actions/checkout@master
       - name: Build Android APK
-
+        working-directory: ./permasnap-client/android
         run: cd android/ && bash ./gradlew assembleDebug
 
 
