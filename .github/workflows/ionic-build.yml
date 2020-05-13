@@ -32,25 +32,29 @@ jobs:
       run: |
         npm install
 
-    - working-directory: ./permasnap-client
-      run: |
+    - run: |
         ionic cap sync
       env:
         CI: false
 
-  build-apps:
+  build-ios:
       needs: environment-setup
       runs-on: macos-latest
       steps: 
       - uses: actions/checkout@master
       - name: Build iOS IPA
-        working-directory: ./permasnap-client/ios/App
+        working-directory: ./ios/App
         run: |
           pwd
           xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos 
     
+  build-android:
+      needs: environment-setup
+      runs-on: macos-latest
+      steps: 
+      - uses: actions/checkout@master
       - name: Build Android APK
-        working-directory: ./permasnap-client/android
+        working-directory: ../android
         run: |
           pwd
           bash ./gradlew assembleDebug
