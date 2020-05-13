@@ -35,7 +35,7 @@ jobs:
       run: |
         npm install
 
-    - working-directory: ./permasnap-client/ios/App
+    - working-directory: ./permasnap-client/
       run: |
         ionic cap sync
       env:
@@ -43,7 +43,7 @@ jobs:
 
       
     - name: Build iOS IPA
-      working-directory: ./permasnap-client
+      working-directory: ./permasnap-client/ios/App
       run: xcodebuild -workspace App.xcworkspace -scheme App clean -configuration debug -sdk iphoneos 
       
     - name: Build Android APK
