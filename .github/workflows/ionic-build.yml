@@ -11,10 +11,7 @@ jobs:
 
   environment-setup:
     runs-on: macos-latest
-    env:
-      working-directory: ./permasnap-client
-      CI: false
-    
+
     steps:
     - uses: actions/checkout@master
 
@@ -42,20 +39,21 @@ jobs:
         CI: false
 
   build-ios:
-    - name: Build iOS IPA
       needs: environment-setup
       runs-on: macos-latest
       steps: 
-      - working-directory: ./permasnap-client/ios/App
+      - name: Build iOS IPA
+        working-directory: ./permasnap-client/ios/App
         run: xcodebuild -workspace App.xcworkspace -scheme App clean -configuration debug -sdk iphoneos 
     
   build-android:
-    - name: Build Android APK
+    
       needs: environment-setup
       runs-on: macos-latest
       steps:
-        - working-directory: ./permasnap-client/android
-          run: bash ./gradlew assembleDebug
+      - name: Build Android APK
+        working-directory: ./permasnap-client/android
+        run: bash ./gradlew assembleDebug
 
 
 
