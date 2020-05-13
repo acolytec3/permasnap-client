@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  build:
+  environment-setup:
     runs-on: macos-latest
     env:
       working-directory: ./permasnap-client
@@ -41,14 +41,21 @@ jobs:
       env:
         CI: false
 
-      
+  build-ios:
     - name: Build iOS IPA
-      working-directory: ./permasnap-client/ios/App
-      run: xcodebuild -workspace App.xcworkspace -scheme App clean -configuration debug -sdk iphoneos 
-      
+      needs: environment-setup
+      runs-on: macos-latest
+      steps: 
+      - working-directory: ./permasnap-client/ios/App
+        run: xcodebuild -workspace App.xcworkspace -scheme App clean -configuration debug -sdk iphoneos 
+    
+  build-android:
     - name: Build Android APK
-      working-directory: ./permasnap-client/android
-      run: bash ./gradlew assembleDebug
+      needs: environment-setup
+      runs-on: macos-latest
+      steps:
+        - working-directory: ./permasnap-client/android
+          run: bash ./gradlew assembleDebug
 
 
 
