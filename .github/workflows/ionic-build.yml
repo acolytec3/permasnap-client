@@ -32,7 +32,8 @@ jobs:
       run: |
         npm install
 
-    - run: |
+    - working-directory: ./permasnap-client
+      run: |
         ionic cap sync
       env:
         CI: false
