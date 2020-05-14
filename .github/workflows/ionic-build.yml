@@ -31,23 +31,11 @@ jobs:
       run: |
         npm install
 
+    - name: Build Android APK
+      working-directory: ./android
+      run: bash ./gradlew assembleDebug
 
-
-  build-ios:
-      needs: environment-setup
-      runs-on: macos-latest
-      steps: 
-      - uses: actions/checkout@master
-      - name: Build iOS IPA
-        run: cd ios/App/ && xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos CODE_SIGNING_ALLOWED="NO" CODE_SIGNING_REQUIRED="NO" CODE_SIGNING_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
-    
-  build-android:
-      needs: environment-setup
-      runs-on: macos-latest
-      steps: 
-      - uses: actions/checkout@master
-      - name: Build Android APK
-        working-directory: ./android
-        run: bash ./gradlew assembleDebug
-
-
+    - name: Build iOS IPA
+      working-directory: ./ios/App
+      run: xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos CODE_SIGNING_ALLOWED="NO" CODE_SIGNING_REQUIRED="NO" CODE_SIGNING_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
+      
