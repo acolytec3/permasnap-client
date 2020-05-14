@@ -30,6 +30,12 @@ jobs:
     - name: Install dependencies
       run: |
         npm install
+    
+    - name: Build app
+      run: |
+        ionic cap sync
+      env:
+        CI: false
 
     - name: Build Android APK
       working-directory: ./android
