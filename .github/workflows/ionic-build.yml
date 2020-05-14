@@ -39,7 +39,7 @@ jobs:
       steps: 
       - uses: actions/checkout@master
       - name: Build iOS IPA
-        run: cd ios/App/ && xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGNING_IDENTITY=""
+        run: cd ios/App/ && xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos CODE_SIGNING_ALLOWED="NO" CODE_SIGNING_REQUIRED="NO" CODE_SIGNING_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
     
   build-android:
       needs: environment-setup
