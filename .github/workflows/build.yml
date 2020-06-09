@@ -58,6 +58,12 @@ jobs:
       working-directory: ./android
       run: bash ./gradlew assembleDebug
 
+    - name: Upload Android APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: android-build
+        path: ./build/app/outputs/apk/release
+
     - name: Build iOS IPA
       working-directory: ./ios/App
       run: xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos CODE_SIGNING_ALLOWED="NO" CODE_SIGNING_REQUIRED="NO" CODE_SIGNING_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
