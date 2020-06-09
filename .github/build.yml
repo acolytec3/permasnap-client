@@ -1,0 +1,65 @@
+name: Permasnap build job
+
+on:
+  
+  push:
+    branches:
+      - master
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  Build-Apps:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: Set up JDK 1.8git
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+
+    - name: Cache/restore Node_modules
+      uses: actions/cache@v1
+      id: cache
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Cache/restore Gradle
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - run: npm install -g @ionic/cli
+    
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        npm install
+    
+    - name: Build app
+      run: |
+        ionic cap sync
+      env:
+        CI: false
+
+    - name: Build Android APK
+      working-directory: ./android
+      run: bash ./gradlew assembleDebug
+
+    - name: Build iOS IPA
+      working-directory: ./ios/App
+      run: xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos CODE_SIGNING_ALLOWED="NO" CODE_SIGNING_REQUIRED="NO" CODE_SIGNING_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
+      
