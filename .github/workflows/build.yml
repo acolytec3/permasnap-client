@@ -62,7 +62,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: android-build
-        path: ./android/app/build/outputs/apk/release
+        path: ./android/app/build/outputs/apk/debug
 
     - name: Build iOS IPA
       working-directory: ./ios/App
