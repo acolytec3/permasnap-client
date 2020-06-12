@@ -67,4 +67,17 @@ jobs:
     - name: Build iOS IPA
       working-directory: ./ios/App
       run: xcodebuild -workspace App.xcworkspace -scheme App build -configuration debug -sdk iphoneos CODE_SIGNING_ALLOWED="NO" CODE_SIGNING_REQUIRED="NO" CODE_SIGNING_IDENTITY="" CODE_SIGN_ENTITLEMENTS=""
+
+    - name: For real build ./ios/App
+      uses: yukiarrr/ios-build-action@v0.5.0
+      with:
+        project-path: App.xcodeproj
+        p12-base64: ${{ secrets.P12_BASE64 }}
+        mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+        code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+        team-id: ${{ secrets.TEAM_ID }}
+        workspace-path: App.xcworkspace
+        configuration: Debug
+        export-method: ad-hoc
+        certificate-password: ${{ secrets.CERT_PW }}
       
